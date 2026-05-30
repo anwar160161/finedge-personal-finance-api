@@ -1,0 +1,30 @@
+[
+    {
+        "id": "9a21bc30-023a-42f5-8a79-45247293e6ca",
+        "type": "income",
+        "category": "Salary",
+        "amount": 50000.0,
+        "date": "2026-05-30"
+    },
+    {
+        "id": "c866838b-fc33-4ef3-ba99-e7342d6f5978",
+        "type": "expense",
+        "category": "Food $ Grocery",
+        "amount": 1000.0,
+        "date": "2026-05-30"
+    },
+    {
+        "id": "6f67144b-141e-430b-b382-5332b906719a",
+        "type": "expense",
+        "category": "Food",
+        "amount": 500.0,
+        "date": "2026-05-30"
+    },
+    {
+        "id": "829edf76-70ab-41a7-9ae1-de4350e80b7d",
+        "type": "expense",
+        "category": "Travel",
+        "amount": 2000.0,
+        "date": "2026-05-30"
+    }
+]
