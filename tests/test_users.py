@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from app.main import app
+import uuid
 
 client = TestClient(app)
 
@@ -9,8 +10,8 @@ def test_create_user():
     response = client.post(
         "/users",
         json={
-            "name": "Anwar",
-            "email": "anwar@gmail.com",
+            "name": "Test User",
+            "email": f"{uuid.uuid4()}@test.com",
             "password": "123456"
         }
     )

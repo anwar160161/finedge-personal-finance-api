@@ -1,28 +1,27 @@
 from app.services.transaction_service import get_transactions
 from app.utils.cache import get_cache, set_cache
-from app.utils.ai_helper import (
-    generate_saving_tip
-)
+from app.utils.ai_helper import generate_saving_tip
 
-async def get_summary():
+
+async def get_summary(db):
 
     cached_summary = get_cache("summary")
 
     if cached_summary:
         return cached_summary
 
-    transactions = await get_transactions()
+    transactions = await get_transactions(db)
 
     income = sum(
-        t["amount"]
+        t.amount
         for t in transactions
-        if t["type"].lower() == "income"
+        if t.type.lower() == "income"
     )
 
     expense = sum(
-        t["amount"]
+        t.amount
         for t in transactions
-        if t["type"].lower() == "expense"
+        if t.type.lower() == "expense"
     )
 
     summary = {

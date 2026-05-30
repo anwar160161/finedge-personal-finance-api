@@ -1,33 +1,80 @@
-import json
 import uuid
+from fastapi import HTTPException
+from app.models.user import User
 
-USERS_FILE = "app/data/users.json"
+async def get_all_users(db):
 
+    users = db.query(User).all()
 
-async def get_all_users():
-    try:
-        with open(USERS_FILE, "r") as file:
-            return json.load(file)
-    except:
-        return []
+    return users
 
+async def create_user(user_data, db):
 
-async def create_user(user):
-    users = await get_all_users()
+    existing_user = (
+        db.query(User)
+        .filter(User.email == user_data.email)
+        .first()
+    )
 
-    new_user = {
-        "id": str(uuid.uuid4()),
-        "name": user.name,
-        "email": user.email,
-        "password": user.password
-    }
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email already registered"
+        )
 
-    users.append(new_user)
+    user = User(
+        id=str(uuid.uuid4()),
+        name=user_data.name,
+        email=user_data.email,
+        password=user_data.password
+    )
 
-    with open(USERS_FILE, "w") as file:
-        json.dump(users, file, indent=4)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
 
     return {
         "message": "User created successfully",
-        "user": new_user
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        }
+    }
+
+async def get_user_by_id(user_id, db):
+
+    user = (
+        db.query(User)
+        .filter(User.id == user_id)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    return user
+
+async def delete_user(user_id, db):
+
+    user = (
+        db.query(User)
+        .filter(User.id == user_id)
+        .first()
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    db.delete(user)
+    db.commit()
+
+    return {
+        "message": "User deleted successfully"
     }

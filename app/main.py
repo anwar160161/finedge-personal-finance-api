@@ -7,8 +7,30 @@ from app.routes.summary_routes import router as summary_router
 from app.middleware.logger import LoggerMiddleware
 from app.middleware.error_handler import global_exception_handler
 from app.routes.auth_routes import router as auth_router
+from app.database import Base, engine
 
-app = FastAPI(title="FinEdge API")
+app = FastAPI(
+    title="FinEdge Personal Finance API",
+    description="""
+    Personal Finance Management API built with FastAPI, SQLAlchemy, and SQLite.
+
+    Features:
+    • User Management
+    • JWT Authentication
+    • Transaction Tracking
+    • Financial Summary
+    • Analytics & Reporting
+    • AI Saving Tips
+    """,
+    version="2.0.0",
+    contact={
+        "name": "Anwar Shaik",
+        "email": "anwar160161@gmail.com"
+    }
+
+)
+
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(LoggerMiddleware)
 app.include_router(auth_router)
