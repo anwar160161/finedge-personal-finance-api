@@ -1,10 +1,16 @@
 # FinEdge Personal Finance API
 
+Version: 2.0.0
+
+A modern Personal Finance Management API built with FastAPI, SQLAlchemy, and SQLite. The application enables users to manage income and expenses, generate financial summaries, analyze spending patterns, and receive AI-powered saving recommendations.
+
+---
+
 ## Overview
 
-FinEdge Personal Finance API is a backend application built using FastAPI that helps users manage personal finances by tracking income and expenses, generating summaries, setting budgets, and analyzing spending habits.
+FinEdge Personal Finance API is a backend application designed to help users efficiently manage their personal finances by tracking transactions, monitoring spending habits, and generating financial insights.
 
-The project follows MVC architecture and includes authentication, analytics, caching, middleware, testing, and SQLite database persistence using SQLAlchemy ORM.
+The project follows the MVC (Model-View-Controller) architecture and incorporates authentication, analytics, caching, middleware, testing, and database persistence using SQLAlchemy ORM.
 
 ---
 
@@ -13,6 +19,8 @@ The project follows MVC architecture and includes authentication, analytics, cac
 ### Core Features
 
 * User Registration
+* Get User Details
+* Delete User
 * JWT Authentication
 * Add Income and Expense Transactions
 * View All Transactions
@@ -21,7 +29,7 @@ The project follows MVC architecture and includes authentication, analytics, cac
 * Delete Transactions
 * Financial Summary Dashboard
 
-### Analytics
+### Analytics & Reporting
 
 * Filter transactions by category
 * Filter transactions by month
@@ -29,7 +37,7 @@ The project follows MVC architecture and includes authentication, analytics, cac
 
 ### AI-Based Suggestions
 
-* Generates personalized saving tips based on spending patterns
+* Personalized saving tips based on spending patterns
 
 ### Middleware
 
@@ -39,21 +47,21 @@ The project follows MVC architecture and includes authentication, analytics, cac
 
 ### Performance
 
-* In-memory caching for summary endpoint
-* Cache invalidation on transaction updates
+* In-Memory Caching with TTL
+* Cache Invalidation on Transaction Updates
 
 ### Database
 
 * SQLite Database
 * SQLAlchemy ORM
-* Automatic table creation
+* Automatic Table Creation
 
 ### Testing
 
-* Unit tests using Pytest
-* Health endpoint test
-* User API test
-* Transaction API test
+* Unit Tests using Pytest
+* Health Endpoint Test
+* User API Test
+* Transaction API Test
 
 ---
 
@@ -63,10 +71,26 @@ The project follows MVC architecture and includes authentication, analytics, cac
 * FastAPI
 * SQLAlchemy
 * SQLite
-* JWT (PyJWT)
+* PyJWT
 * Pydantic
 * Pytest
 * Uvicorn
+
+---
+
+## Architecture
+
+The application follows the MVC (Model-View-Controller) architecture pattern:
+
+* **Models** – SQLAlchemy ORM database models
+* **Schemas** – Pydantic request and response validation
+* **Routes** – API endpoint definitions
+* **Controllers** – Request handling layer
+* **Services** – Business logic layer
+* **Middleware** – Logging, validation, and exception handling
+* **Database** – SQLite with SQLAlchemy ORM
+
+This architecture improves maintainability, scalability, and separation of concerns.
 
 ---
 
@@ -124,6 +148,12 @@ Windows:
 .venv\Scripts\activate
 ```
 
+Linux/Mac:
+
+```bash
+source .venv/bin/activate
+```
+
 ### Install Dependencies
 
 ```bash
@@ -134,7 +164,7 @@ pip install -r requirements.txt
 
 ## Environment Variables
 
-Create a `.env` file:
+Create a `.env` file in the project root:
 
 ```env
 SECRET_KEY=finedge-secret-key-2026
@@ -143,13 +173,13 @@ PORT=8000
 
 ---
 
-## Run Application
+## Running the Application
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Application:
+Application URL:
 
 ```text
 http://127.0.0.1:8000
@@ -171,18 +201,26 @@ http://127.0.0.1:8000/docs
 | ------ | -------- |
 | GET    | /health  |
 
+---
+
 ### Authentication
 
 | Method | Endpoint    |
 | ------ | ----------- |
 | POST   | /auth/login |
 
+---
+
 ### Users
 
-| Method | Endpoint |
-| ------ | -------- |
-| POST   | /users   |
-| GET    | /users   |
+| Method | Endpoint         |
+| ------ | ---------------- |
+| POST   | /users           |
+| GET    | /users           |
+| GET    | /users/{user_id} |
+| DELETE | /users/{user_id} |
+
+---
 
 ### Transactions
 
@@ -194,12 +232,16 @@ http://127.0.0.1:8000/docs
 | PATCH  | /transactions/{id} |
 | DELETE | /transactions/{id} |
 
+---
+
 ### Analytics
 
 | Method | Endpoint                              |
 | ------ | ------------------------------------- |
 | GET    | /transactions/analytics?category=Food |
 | GET    | /transactions/analytics?month=5       |
+
+---
 
 ### Summary
 
@@ -211,14 +253,17 @@ http://127.0.0.1:8000/docs
 
 ## Running Tests
 
+Execute:
+
 ```bash
 pytest
 ```
 
-Expected Output:
+Current Status:
 
 ```text
-3 passed
+3 Passed Tests
+0 Failed Tests
 ```
 
 ---
@@ -227,18 +272,12 @@ Expected Output:
 
 ### Analytics & Reporting
 
-* Category Based Filtering
+* Category-Based Filtering
 * Monthly Transaction Filtering
 
 ### AI Assistance
 
-* Automated Saving Tips
-
-### Advanced Middleware
-
-* Logging Middleware
-* Validation Middleware
-* Error Handling Middleware
+* Automated Saving Recommendations
 
 ### Authentication
 
@@ -249,9 +288,16 @@ Expected Output:
 * SQLite Database
 * SQLAlchemy ORM
 
-### Caching
+### Advanced Middleware
 
-* In-Memory Cache with TTL
+* Request Logging Middleware
+* Transaction Validation Middleware
+* Global Exception Handling Middleware
+
+### Performance Optimization
+
+* In-Memory Cache Service
+* TTL-Based Cache Expiry
 
 ---
 
@@ -259,10 +305,12 @@ Expected Output:
 
 * Password Hashing using bcrypt
 * PostgreSQL Support
-* Role-Based Authorization
 * Docker Deployment
 * Alembic Database Migrations
 * Refresh Tokens for JWT Authentication
+* Role-Based Authorization
+* User Budget Management
+* Export Reports to PDF/CSV
 
 ---
 
@@ -271,3 +319,5 @@ Expected Output:
 **Anwar Shaik**
 
 Python | FastAPI | SQLAlchemy
+
+GitHub: https://github.com/anwar160161
